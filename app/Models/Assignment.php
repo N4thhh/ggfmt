@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class CoachHistory extends Model
+class Assignment extends Model
 {
-    use HasUuids;
+    use HasUuids;    
 
-    protected $table= 'coach_histories';
+    protected $table= 'assignments';
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -18,13 +18,13 @@ class CoachHistory extends Model
         return $this->belongsTo(ManagementTrainee::class,'mt_id');
     }
 
-    public function coach()
+    public function score()
     {
-        return $this->belongsTo(Coach::class);
+        return $this->hasMany(Score::class);
     }
 
-    public function user()
+    public function panelistAccess()
     {
-        return $this->belongsTo(User::class,'assigned_by');
+        return $this->hasMany(PanelistAccess::class);
     }
 }

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class CoachHistory extends Model
+class MtStatusLog extends Model
 {
-    use HasUuids;
+    use HasUuids;    
 
-    protected $table= 'coach_histories';
+    protected $table= 'mt_status_logs';
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -18,13 +18,8 @@ class CoachHistory extends Model
         return $this->belongsTo(ManagementTrainee::class,'mt_id');
     }
 
-    public function coach()
-    {
-        return $this->belongsTo(Coach::class);
-    }
-
     public function user()
     {
-        return $this->belongsTo(User::class,'assigned_by');
+        return $this->belongsTo(User::class, 'changed_by');
     }
 }

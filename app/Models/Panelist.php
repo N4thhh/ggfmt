@@ -11,7 +11,8 @@ class Panelist extends Model
 
     protected $table= 'panelists';
     public $incrementing = false;
-    protected $keyType = 'string'
+    protected $keyType = 'string';
+    
     public function user()
     {
         return $this->belongsTo(User::class);
