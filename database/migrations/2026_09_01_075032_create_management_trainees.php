@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('mbti',['ISTJ', 'ISTP', 'ISFJ', 'ISFP', 'INFJ', 'INFP', 'INTJ', 'INTP', 'ESTP', 'ESTJ', 'ESFP', 'ESFJ', 'ENFP', 'ENFJ', 'ENTP', 'ENTJ']);
             $table->string('assignment_leader');
             $table->string('program_leader');
+            $table->string('batch');
         });
     }
 
