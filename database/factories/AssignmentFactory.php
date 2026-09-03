@@ -21,8 +21,8 @@ class AssignmentFactory extends Factory
            'mt_id' => \App\Models\ManagementTrainee::inRandomOrder()->first()->id,
            'title' => fake()->sentence(),
            'phase' => fake()->randomElement(['Phase 1', 'Phase 2', 'Phase 3']),
-           'file_path' => $filePath = fake()->optional()->filePath(),
-            'uploaded_at' => $filePath ? fake()->dateTime() : null,
+           'file_path' => $filePath = fake()->filePath(),
+            'uploaded_at' => fake()->dateTime(),
         ];
     }
 }

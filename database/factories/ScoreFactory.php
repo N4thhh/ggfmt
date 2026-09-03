@@ -22,6 +22,7 @@ class ScoreFactory extends Factory
             'assignment_id' => \App\Models\Assignment::inRandomOrder()->first()->id,
             'score' => fake()->numberBetween(0, 100),
             'comments' => fake()->paragraph(),
+            'submitted_at' => fake()->dateTime(),
         ];
     }
 }
