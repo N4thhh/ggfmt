@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('assignment_leader');
             $table->string('program_leader');
             $table->string('batch');
+            $table->string('profile_picture')->nullable();
         });
     }
 

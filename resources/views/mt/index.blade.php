@@ -1,0 +1,38 @@
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Name</th>
+                <th>Program</th>
+                <th>Batch</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($managementTrainees as $mt)
+            <tr>
+                <td>
+                    {{$mt->index_number}}
+                </td>
+                <td>
+                    {{$mt->user->name}}
+                </td>
+                <td>
+                    {{$mt->mtProgram->name}}
+                </td>
+                <td>
+                    {{$mt->batch}}
+                </td>
+                <td>
+                    {{$mt->status}}
+                </td>
+                <td>
+                    <a href="{{ route('mt.show', $mt->id) }}">View</a>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
