@@ -37,7 +37,7 @@ class MtController extends Controller
      */
     public function show(ManagementTrainee $managementTrainee)
     {
-        return view('mt.show', compact('managementTrainee'));
+        return view('mt.profile', compact('managementTrainee'));
     }
 
     /**

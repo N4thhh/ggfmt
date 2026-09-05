@@ -9,5 +9,7 @@ Route::get('/', function () {
 
 });
 
-Route::resource('mt', MtController::class);
+Route::resource('mt', MtController::class)->parameters([
+    'mt' => 'managementTrainee',
+]);
 

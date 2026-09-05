@@ -23,12 +23,13 @@ class ManagementTrainee extends Model
 
     public function mtProgram()
     {
-        return $this->belongsTo(MtProgram::class);
+        return $this->belongsTo(MtProgram::class, 'mt_program_id');
     }
+
 
     public function assignment()
     {
-        return $this->hasMany(Assignment::class);
+        return $this->hasMany(Assignment::class, 'mt_id');
     }
 
     public function mtStatusLog()
@@ -38,11 +39,11 @@ class ManagementTrainee extends Model
 
     public function coachNote()
     {
-        return $this->hasMany(CoachNote::class);
+        return $this->hasMany(CoachNote::class, 'mt_id');
     }
 
     public function coachHistory()
     {
-        return $this->hasMany(CoachHistory::class);
+        return $this->hasMany(CoachHistory::class, 'mt_id');
     }
 }
