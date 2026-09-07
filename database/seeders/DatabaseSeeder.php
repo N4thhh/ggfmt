@@ -46,7 +46,16 @@ class DatabaseSeeder extends Seeder
         MtStatusLog::factory(5)->create();
         CoachNote::factory(5)->create();
         CoachHistory::factory(7)->create();
-        Assignment::factory(15)->create();
+        
+        foreach (ManagementTrainee::all() as $mt) {
+            foreach (['Phase 1', 'Phase 2', 'Phase 3'] as $phase) {
+                Assignment::factory()->create([
+                    'mt_id' => $mt->id,
+                    'phase' => $phase,
+                ]);
+            }
+        }
+
         PanelistAccess::factory(10)->create();
         Score::factory(10)->create();
 

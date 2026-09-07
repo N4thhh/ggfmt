@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MtController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AccountSetupController;
 
 
 Route::get('/', function () {
@@ -13,3 +15,11 @@ Route::resource('mt', MtController::class)->parameters([
     'mt' => 'managementTrainee',
 ]);
 
+Route::resource('user', UserController::class)->parameters([
+    'user' => 'user',
+]);
+
+Route::post('/user/{user}/send-invite', [UserController::class, 'sendInvite'])->name('user.sendInvite');
+Route::post('/user/send-invite-all', [UserController::class, 'sendInviteAll'])->name('user.sendInviteAll');
+Route::get('/setup-account/{token}', [AccountSetupController::class, 'showSetupForm'])->name('account-setup.showSetupForm');
+Route::post('/setup-account/{token}', [AccountSetupController::class, 'store'])->name('account-setup.store');

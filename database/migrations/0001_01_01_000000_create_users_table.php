@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->enum('role', ['admin', 'mt', 'hr', 'panelist', 'coach'])->default('mt');
             $table->timestamp('created_at')->useCurrent();
         });
