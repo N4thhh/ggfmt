@@ -5,6 +5,7 @@ use App\Http\Controllers\MtController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AccountSetupController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CoachController;
 
 
 Route::get('/', function () {
@@ -16,9 +17,9 @@ Route::resource('mt', MtController::class)->parameters([
     'mt' => 'managementTrainee',
 ]);
 
-Route::resource('user', UserController::class)->parameters([
-    'user' => 'user',
-]);
+Route::resource('user', UserController::class);
+
+Route::resource('coach', CoachController::class);
 
 Route::post('/user/{user}/send-invite', [UserController::class, 'sendInvite'])->name('user.sendInvite');
 Route::post('/user/send-invite-all', [UserController::class, 'sendInviteAll'])->name('user.sendInviteAll');
