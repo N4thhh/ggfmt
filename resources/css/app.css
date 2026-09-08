@@ -12,3 +12,10 @@
 }
 
 
+.active {
+    background: white;
+    color: #197B40;
+    padding: 8px 20px;
+    border-radius: 20px;
+    opacity: 1;
+}

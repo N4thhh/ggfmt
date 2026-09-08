@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 <div class="grid grid-cols-4 md:grid-cols-4 grid-rows-4 md:grid-rows-5 gap-2 md:gap-2 m-4">
     <div class="col-start-1 row-start-1 col-span-4 md:col-start-1 md:row-start-1 md:col-span-4 md:row-span-1 bg-gray-300 rounded-md p-10">
         <a href="{{ route('user.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -55,3 +57,4 @@
     </div>
       
 </div>
+@endsection

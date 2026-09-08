@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 <div class="grid grid-cols-4 md:grid-cols-5 grid-rows-4 md:grid-rows-6 gap-2 md:gap-2 m-4">
     
     <div class="col-start-1 row-start-1 col-span-4 md:col-start-2 md:row-start-2 md:col-span-3 md:row-span-1 bg-gray-300 rounded-md p-10">
@@ -32,3 +34,4 @@
     </div>
       
 </div>
+@endsection

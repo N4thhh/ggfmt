@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 <div class="grid grid-cols-4 md:grid-cols-6 grid-rows-10 md:grid-rows-6 gap-2 md:gap-4 m-4">
     <div class="col-start-1 row-start-1 col-span-2 row-span-2 md:col-start-1 md:row-start-1 md:col-span-1 md:row-span-2 bg-gray-300 rounded-md p-10">
         <img src="{{ asset('images/mt-profile.jpg') }}" alt="Profile Image" class="profile-image">
@@ -77,6 +79,7 @@
     </div>
       
     </div>
+@endsection
 
     <script>
 
