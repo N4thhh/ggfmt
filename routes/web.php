@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AccountSetupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CoachController;
+use App\Http\Controllers\PanelistController;
 
 
 Route::get('/', function () {
@@ -20,6 +21,8 @@ Route::resource('mt', MtController::class)->parameters([
 Route::resource('user', UserController::class)->middleware(['auth','role:admin,hr']);
 
 Route::resource('coach', CoachController::class)->middleware(['auth','role:admin,hr']);
+
+Route::resource('panelist', PanelistController::class)->middleware(['auth','role:admin,hr']);
 
 Route::post('/user/{user}/send-invite', [UserController::class, 'sendInvite'])->name('user.sendInvite')->middleware(['auth','role:admin,hr']);
 Route::post('/user/send-invite-all', [UserController::class, 'sendInviteAll'])->name('user.sendInviteAll')->middleware(['auth','role:admin,hr']);
