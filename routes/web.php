@@ -7,6 +7,7 @@ use App\Http\Controllers\AccountSetupController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CoachController;
 use App\Http\Controllers\PanelistController;
+use App\Http\Controllers\ScoringController;
 
 
 Route::get('/', function () {
@@ -31,3 +32,5 @@ Route::post('/setup-account/{token}', [AccountSetupController::class, 'store'])-
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/assignments/{assignment}/score', [ScoringController::class, 'show'])->name('scoring.show')->middleware(['auth', 'role:panelist']);
+Route::post('/assignments/{assignment}/score', [ScoringController::class, 'store'])->name('scoring.store')->middleware(['auth', 'role:panelist']);

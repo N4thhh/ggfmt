@@ -37,7 +37,19 @@ class PanelistController extends Controller
      */
     public function show(Panelist $panelist)
     {
-        return view('panelist.profile', compact('panelist'));
+        $scoredAssignmentIds = \App\Models\Score::where('panelist_id', $panelist->id)
+            ->whereNotNull('submitted_at')
+            ->pluck('assignment_id');
+    
+        $scoredAccess = $panelist->panelistAccess()
+            ->whereIn('assignment_id', $scoredAssignmentIds)
+            ->get();
+    
+        $pendingAccess = $panelist->panelistAccess()
+            ->whereNotIn('assignment_id', $scoredAssignmentIds)
+            ->get();
+    
+        return view('panelist.profile', compact('panelist', 'scoredAccess', 'pendingAccess'));
     }
 
     /**
