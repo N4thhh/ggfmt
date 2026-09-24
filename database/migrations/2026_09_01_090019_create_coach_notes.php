@@ -15,10 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('coach_id')->constrained('coaches', 'id')->onDelete('cascade');
             $table->foreignUuid('mt_id')->constrained('management_trainees', 'id')->onDelete('cascade');
-            $table->text('summary_of_issues');
-            $table->text('specific_actions');
-            $table->text('progress');
-            $table->text('notes');
             $table->text('comments');
             $table->timestamp('created_at')->useCurrent();
         });

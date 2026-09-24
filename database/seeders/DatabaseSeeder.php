@@ -116,26 +116,26 @@ class DatabaseSeeder extends Seeder
         // ── Coach notes ───────────────────────────────────────────────────────
         // mt1: 0 notes
         // mt2: 1 note
-        CoachNote::create(['coach_id' => $coach2->id, 'mt_id' => $mt2->id, 'summary_of_issues' => 'Good progress', 'specific_actions' => 'Continue approach', 'progress' => 'On track', 'notes' => 'No issues', 'comments' => 'Keep it up']);
+        CoachNote::create(['coach_id' => $coach2->id, 'mt_id' => $mt2->id, 'comments' => 'Keep it up']);
 
         // mt3: 3 notes (2 from coach3, 1 from coach2 after transfer)
-        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt3->id, 'summary_of_issues' => 'Initial assessment', 'specific_actions' => 'Set goals', 'progress' => 'Starting', 'notes' => 'First session', 'comments' => 'Promising start']);
-        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt3->id, 'summary_of_issues' => 'Mid review', 'specific_actions' => 'Address gaps', 'progress' => 'Improving', 'notes' => 'Second session', 'comments' => 'Good direction']);
-        CoachNote::create(['coach_id' => $coach2->id, 'mt_id' => $mt3->id, 'summary_of_issues' => 'Post-transfer', 'specific_actions' => 'Maintain momentum', 'progress' => 'Strong', 'notes' => 'First with new coach', 'comments' => 'Excellent']);
+        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt3->id, 'comments' => 'Promising start']);
+        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt3->id, 'comments' => 'Good direction']);
+        CoachNote::create(['coach_id' => $coach2->id, 'mt_id' => $mt3->id, 'comments' => 'Excellent']);
 
         // mt4: 0 notes
         // mt5: 2 notes
-        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt5->id, 'summary_of_issues' => 'Performance issues', 'specific_actions' => 'Improvement plan', 'progress' => 'Struggling', 'notes' => 'Concerns raised', 'comments' => 'Needs support']);
-        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt5->id, 'summary_of_issues' => 'Follow up', 'specific_actions' => 'Final review', 'progress' => 'No improvement', 'notes' => 'Decision made', 'comments' => 'Program ended']);
+        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt5->id, 'comments' => 'Needs support']);
+        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt5->id, 'comments' => 'Program ended']);
 
         // mt6: 1 note
-        CoachNote::create(['coach_id' => $coach4->id, 'mt_id' => $mt6->id, 'summary_of_issues' => 'Final review', 'specific_actions' => 'Completion', 'progress' => 'Excellent', 'notes' => 'Graduation prep', 'comments' => 'Completed successfully']);
+        CoachNote::create(['coach_id' => $coach4->id, 'mt_id' => $mt6->id, 'comments' => 'Completed successfully']);
 
         // mt7: 0 notes
         // mt8: 3 notes
-        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt8->id, 'summary_of_issues' => 'Session 1', 'specific_actions' => 'Goal setting', 'progress' => 'Beginning', 'notes' => 'Note 1', 'comments' => 'Good start']);
-        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt8->id, 'summary_of_issues' => 'Session 2', 'specific_actions' => 'Midpoint check', 'progress' => 'On track', 'notes' => 'Note 2', 'comments' => 'Progressing well']);
-        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt8->id, 'summary_of_issues' => 'Session 3', 'specific_actions' => 'Final review', 'progress' => 'Strong', 'notes' => 'Note 3', 'comments' => 'Well done']);
+        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt8->id, 'comments' => 'Good start']);
+        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt8->id, 'comments' => 'Progressing well']);
+        CoachNote::create(['coach_id' => $coach3->id, 'mt_id' => $mt8->id, 'comments' => 'Well done']);
 
         // ── Assignments ───────────────────────────────────────────────────────
         $phases = ['Phase 1', 'Phase 2', 'Phase 3'];
