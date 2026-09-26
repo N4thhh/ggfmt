@@ -16,13 +16,25 @@ Route::get('/', function () {
 
 });
 
-Route::resource('mt', MtController::class)->parameters([
-    'mt' => 'managementTrainee',
-])->middleware(['auth','role:admin,hr,coach,panelist']);
+Route::resource('mt', MtController::class)
+    ->parameters(['mt' => 'managementTrainee'])
+    ->only(['index'])
+    ->middleware(['auth', 'role:admin,hr,panelist']);
+
+Route::resource('mt', MtController::class)
+    ->parameters(['mt' => 'managementTrainee'])
+    ->only(['show'])
+    ->middleware(['auth', 'role:admin,hr,coach,panelist']);
 
 Route::resource('user', UserController::class)->middleware(['auth','role:admin,hr']);
 
-Route::resource('coach', CoachController::class)->middleware(['auth','role:admin,hr']);
+Route::resource('coach', CoachController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware(['auth', 'role:admin,hr']);
+
+Route::resource('coach', CoachController::class)
+    ->only(['show'])
+    ->middleware(['auth', 'role:admin,hr,coach']);
 
 Route::resource('panelist', PanelistController::class)->middleware(['auth','role:admin,hr']);
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Coach;
+use Illuminate\Support\Facades\Auth;
 
 class CoachController extends Controller
 {
@@ -37,6 +38,9 @@ class CoachController extends Controller
      */
     public function show(Coach $coach)
     {
+        if (Auth::user()->role === 'coach' && Auth::user()->coach->id !== $coach->id) {
+        abort(403);
+        }
         return view('coach.profile', compact('coach'));
     }
 
