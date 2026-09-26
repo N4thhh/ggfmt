@@ -59,4 +59,5 @@ class ScoringController extends Controller
         return redirect()->back()->with('success', 'Score submitted successfully.');
 
     }
+
 }

@@ -88,7 +88,6 @@
   </div>
       
 </div>
-@endsection
 
 <script>
     function showList(list) {
@@ -112,3 +111,5 @@
             document.getElementById('date-' + created_at).style.display = 'block';
         }
 </script>
+
+@endsection

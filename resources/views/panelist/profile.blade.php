@@ -28,7 +28,7 @@
               <p>{{ $access->assignment->phase }}</p>
               <p>{{ $access->assignment->title }}</p>
               <p>Uploaded: {{ $access->assignment->uploaded_at ?? 'Not yet' }}</p>
-              <a href="{{ route('scoring.show', $access->assignment) }}" class="text-blue-500">Score</a>
+              <a href="{{ route('scoring.adminShow', $access->assignment) }}" class="text-blue-500">Score</a>
             </div>
           @endforeach
         </div>
@@ -42,13 +42,12 @@
               <p>{{ $access->assignment->phase }}</p>
               <p>{{ $access->assignment->title }}</p>
               <p>Uploaded: {{ $access->assignment->uploaded_at }}</p>
-              <a href="{{ route('scoring.show', $access->assignment) }}" class="text-blue-500">View</a>
+              <a href="{{ route('mt.show', $access->assignment->managementTrainee) . '?phase=' . urlencode($access->assignment->phase) }}" class="text-blue-500">View</a>            
             </div>
           @endforeach
         </div>
     </div>
 </div>
-@endsection
 
 <script>
     function showFilter(filter) {
@@ -58,3 +57,5 @@
         document.getElementById(filter).style.display = 'block';
     }
 </script>
+
+@endsection

@@ -79,7 +79,6 @@
     </div>
       
     </div>
-@endsection
 
     <script>
 
@@ -98,4 +97,12 @@
             });
             document.getElementById('date-' + created_at).style.display = 'block';
         }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const preselectedPhase = urlParams.get('phase');
+        if (preselectedPhase) {
+            showAssignment(preselectedPhase);
+        }
     </script>
+
+@endsection
