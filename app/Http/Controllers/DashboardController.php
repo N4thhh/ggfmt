@@ -33,7 +33,7 @@ public function index(Request $request)
     $programs = MtProgram::pluck('name');
     $batches  = ManagementTrainee::distinct()->pluck('batch')->sort()->values();
 
-    return view('dashboard.index', compact(
+    return view('dashboard', compact(
         'total', 'active', 'graduate', 'withdraw', 'failed',
         'successRate', 'retentionRate', 'avgSuccessRate',
         'totalCoaches', 'totalPanelists',

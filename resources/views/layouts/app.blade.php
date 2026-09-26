@@ -11,10 +11,12 @@
         <div><img class="h-9 mb-2" src="{{ asset('GGF White.png') }}" alt="GGF Logo"></div>
         <div class="items-center gap-8 flex">
             <a href="{{ route('dashboard') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+            @if(Auth::user()->role == 'admin' || 'hr')
             <a href="{{ route('mt.index') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('mt.*') ? 'active' : '' }}">Management Trainees</a>
             <a href="{{ route('coach.index') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('coach.*') ? 'active' : '' }}">Coach</a>
             <a href="{{ route('panelist.index') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('panelist.*') ? 'active' : '' }}">Panelist</a>
-            @if(Auth::user()->role === 'admin')
+            @endif
+            @if(Auth::user()->role == 'admin')
             <a href="{{ route('user.index') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('user.*') ? 'active' : '' }}">Users</a>
             @endif
         </div>
