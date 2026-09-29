@@ -8,7 +8,20 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function showLoginForm(){
-        return view('login');
+        if(Auth::check()){
+            
+            $role = Auth::user()->role;
+        return match($role) {
+        'admin', 'hr' => redirect()->route('dashboard'),
+        'coach'       => redirect()->route('coach.show', Auth::user()->coach),
+        'panelist'    => redirect()->route('panelist.show', Auth::user()->panelist),
+        'mt'          => redirect()->route('mt.show', Auth::user()->managementTrainee),
+        default       => redirect()->route('mt.index'),
+    };
+    }
+
+    return view('login');
+
     }
 
     public function login(Request $request){
@@ -18,7 +31,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            $role = Auth::user()->role;
+        $role = Auth::user()->role;
             
             return match($role) {
                 'admin', 'hr' => redirect()->route('mt.index'),

@@ -15,9 +15,8 @@
                     <a href="{{ route('mt.index') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('mt.*') ? 'active' : '' }}">Management Trainees</a>
                     <a href="{{ route('coach.index') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('coach.*') ? 'active' : '' }}">Coach</a>
                     <a href="{{ route('panelist.index') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('panelist.*') ? 'active' : '' }}">Panelist</a>
-                    <a href="{{ route('user.index') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('user.*') ? 'active' : '' }}">Users</a>
                     @if(Auth::user()->role === 'admin')
-                        <a href="{{ route('user.create') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('user.create') ? 'active' : '' }}">Create Account</a>
+                    <a href="{{ route('user.index') }}" class="text-white no-underline text-sm font-semibold opacity-80 transition whitespace-nowrap {{ request()->routeIs('user.*') ? 'active' : '' }}">Users</a>
                     @endif
                 @endif
 
