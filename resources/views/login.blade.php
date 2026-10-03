@@ -1,35 +1,71 @@
 @extends('layouts.app')
 @section('content')
-<div class="grid grid-cols-4 md:grid-cols-4 grid-rows-4 md:grid-rows-5 gap-2 md:gap-2 m-4">
-    <div class="hidden md:block md:col-start-1 md:row-start-1 md:col-span-2 md:row-span-5 bg-gray-300 rounded-md p-10">
-        <!--image-->
-    </div>
-  
-    <div class="col-start-1 row-start-1 col-span-4 row-span-4 md:col-start-3 md:row-start-1 md:col-span-2 md:row-span-5 bg-gray-300 rounded-md p-10">
-        <form method="POST" action="{{ route('login.submit') }}" enctype="multipart/form-data">
-            @csrf
-            <div class="mb-4">
-                <label for="email" class="block text-gray-700 font-bold mb-2">Email:</label>
-                <input type="email" id="email" name="email" class="w-full p-2 border border-gray-300 rounded">
-            </div>
-            <div class="mb-4">
-                <label for="password" class="block text-gray-700 font-bold mb-2">Password:</label>
-                <input type="password" id="password" name="password" class="w-full p-2 border border-gray-300 rounded">
+<!-- Full screen background -->
+<div class="min-h-screen bg-[#197B40] flex items-center justify-center p-6">
+    
+    <!-- Main Login Card -->
+    <div class="bg-white rounded-[2rem] shadow-2xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
+        
+        <!-- Left Column: Mascot Image -->
+        <!-- Using a slightly off-white background to match the design distinction -->
+        <div class="w-full md:w-1/2 bg-gray-50 flex items-center justify-center p-12 border-b md:border-b-0 md:border-r border-gray-100">
+            <img src="{{ asset('Pina - Say Hi.png') }}" alt="Pina - Say Hi" class="max-w-full h-auto object-contain">
+        </div>
+        
+        <!-- Right Column: Login Form -->
+        <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center bg-white">
+            
+            <!-- Logo -->
+            <div class="flex justify-center mb-6">
+                <img src="{{ asset('GGF Green.png') }}" alt="GGF Logo" class="h-16 object-contain">
             </div>
             
-            <div class="text-red-500 mb-4">
-                @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-                @endforeach
+            <!-- Headings -->
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-extrabold text-[#197B40] mb-2 tracking-tight">Welcome Back</h2>
+                <p class="text-gray-500 text-sm">Sign in to access your training dashboard</p>
             </div>
+            
+            <!-- Login Form -->
+            <form method="POST" action="{{ route('login.submit') }}" class="flex flex-col gap-6">
+                @csrf
+                
+                <!-- Email Input -->
+                <div>
+                    <label for="email" class="block text-sm font-bold text-gray-900 mb-2">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#197B40] focus:border-transparent transition text-sm" required>
+                </div>
+                
+                <!-- Password Input -->
+                <div>
+                    <label for="password" class="block text-sm font-bold text-gray-900 mb-2">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#197B40] focus:border-transparent transition text-sm" required>
+                </div>
+                
+                <!-- Error Messages -->
+                @if ($errors->any())
+                <div class="text-red-500 text-sm mt-[-10px]">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+                @endif
 
-            <div class="mb-4">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Login
+                <!-- Standard Submit Button -->
+                <button type="submit" class="w-full mt-2 bg-[#fba919] hover:bg-orange-500 text-white font-bold text-lg py-3.5 rounded-xl shadow-sm transition duration-300">
+                    Sign In
                 </button>
+            </form>
+            
+            <!-- Footer Link -->
+            <div class="mt-8 text-center text-sm text-gray-500">
+                Forgot password? <a href="#" class="text-[#197B40] font-bold hover:underline">click here</a>
             </div>
-        </form>
-        
+            
+        </div>
     </div>
+    
 </div>
 @endsection

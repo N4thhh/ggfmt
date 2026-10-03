@@ -92,7 +92,6 @@
     <form method="GET" action="{{ route('dashboard') }}" class="flex flex-row items-center justify-between w-full gap-4">
       
       <div class="flex items-center gap-6">
-        <!-- Program (Dropdown Putih) -->
         <div class="flex items-center gap-2">
           <label class="text-[11px] font-bold text-white/90 uppercase whitespace-nowrap">Program:</label>
           <select name="program" class="bg-white text-gray-800 border-none rounded-md px-3 py-1.5 text-xs outline-none focus:ring-2 focus:ring-[#fba919] transition cursor-pointer">
@@ -105,10 +104,8 @@
           </select>
         </div>
         
-        <!-- Garis Pemisah -->
         <div class="h-6 w-px bg-white/30"></div>
 
-        <!-- Batch (Dropdown Custom Putih dengan Checkbox) -->
         <div class="flex items-center gap-2 relative">
           <label class="text-[11px] font-bold text-white/90 uppercase whitespace-nowrap">Batch:</label>
           
@@ -118,7 +115,6 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-open:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
             </summary>
             
-            <!-- Isi Dropdown Checkbox -->
             <div class="absolute top-full mt-1 left-10 bg-white border border-gray-200 rounded-md shadow-lg p-3 flex flex-col gap-2 min-w-[150px] z-50 max-h-48 overflow-y-auto">
               @foreach($batches as $batch)
                 <label class="flex items-center gap-2 text-xs text-gray-700 cursor-pointer hover:bg-gray-50 p-1 rounded transition">
@@ -131,7 +127,6 @@
         </div>
       </div>
       
-      <!-- Tombol Apply (Warna Oranye) -->
       <div>
         <button type="submit" class="bg-[#fba919] text-white px-6 py-1.5 rounded-md text-xs font-bold shadow-sm hover:bg-orange-500 transition whitespace-nowrap">
           Apply Filter
@@ -141,7 +136,6 @@
     </form>
   </div>
 
-  <!-- BARIS 4: 3 Kartu Persentase (Outline Abu-abu dan Teks Bahasa Inggris) -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     
     <div class="bg-white rounded-xl p-4 border border-gray-300 flex flex-col justify-center">
