@@ -8,19 +8,18 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     public function showLoginForm(){
-        if(Auth::check()){
-            
+        if(Auth::check()){    
             $role = Auth::user()->role;
-        return match($role) {
-        'admin', 'hr' => redirect()->route('dashboard'),
-        'coach'       => redirect()->route('coach.show', Auth::user()->coach),
-        'panelist'    => redirect()->route('panelist.show', Auth::user()->panelist),
-        'mt'          => redirect()->route('mt.show', Auth::user()->managementTrainee),
-        default       => redirect()->route('mt.index'),
+            return match($role) {
+            'admin', 'hr' => redirect()->route('dashboard'),
+            'coach'       => redirect()->route('coach.show', Auth::user()->coach),
+            'panelist'    => redirect()->route('panelist.show', Auth::user()->panelist),
+            'mt'          => redirect()->route('mt.show', Auth::user()->managementTrainee),
+            default       => redirect()->route('mt.index'),
     };
     }
 
-    return view('login');
+        return view('login');
 
     }
 
