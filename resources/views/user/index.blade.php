@@ -20,6 +20,17 @@
         </div>
     </div>
 
+    @if(session('error'))
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 m-4 text-sm rounded-md" role="alert">
+            <p>{{ session('error') }}</p>
+        </div>
+    @endif
+    @if(session('success'))
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 m-4 text-sm rounded-md" role="alert">
+            <p>{{ session('success') }}</p>
+        </div>
+    @endif
+
     <div class="overflow-x-auto">
         <table class="w-full text-sm text-left whitespace-nowrap">
             <thead class="text-xs text-gray-500 uppercase tracking-wider bg-white border-b-2 border-gray-100">
@@ -50,18 +61,36 @@
                     </td>
                     
                     <td class="px-8 py-4 text-center">
-                        <form method="POST" action="{{ route('user.sendInvite', $user) }}" class="m-0 inline-block">
-                            @csrf
-                            @if ($user->password == null)
-                                <button type="submit" class="bg-[#fba919] hover:bg-orange-500 text-white font-bold px-6 py-2 rounded-full text-xs transition shadow-sm flex items-center justify-center mx-auto gap-2">
-                                    <i data-lucide="send" class="w-3.5 h-3.5"></i> Send Invite
-                                </button>
+                        <div class="flex items-center justify-center gap-2">
+                            
+                            <form method="POST" action="{{ route('user.sendInvite', $user) }}" class="m-0">
+                                @csrf
+                                @if ($user->password == null)
+                                    <button type="submit" class="w-28 bg-[#fba919] hover:bg-orange-500 text-white font-bold py-2 rounded-full text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                                        <i data-lucide="send" class="w-3.5 h-3.5"></i> Invite
+                                    </button>
+                                @else
+                                    <button type="button" class="w-28 bg-gray-200 text-gray-400 font-bold py-2 rounded-full text-xs cursor-not-allowed flex items-center justify-center gap-1.5" disabled>
+                                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Invited
+                                    </button>
+                                @endif
+                            </form>
+
+                            @if ($user->role !== 'admin')
+                                <form method="POST" action="{{ route('user.destroy', $user) }}" class="m-0" onsubmit="return confirm('Are you sure you want to delete {{ $user->name }}? This action cannot be undone.');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="w-28 bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-full text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete
+                                    </button>
+                                </form>
                             @else
-                                <button type="submit" class="bg-gray-200 text-gray-400 font-bold px-6 py-2 rounded-full text-xs cursor-not-allowed flex items-center justify-center mx-auto gap-2" disabled>
-                                    <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Invited
+                                <button type="button" class="w-28 bg-gray-200 text-gray-400 font-bold py-2 rounded-full text-xs cursor-not-allowed flex items-center justify-center gap-1.5" disabled>
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete
                                 </button>
                             @endif
-                        </form>
+
+                        </div>
                     </td>
                     
                 </tr>

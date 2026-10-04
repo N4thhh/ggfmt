@@ -67,9 +67,15 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        if ($user->role === 'admin') {
+            return redirect()->back()->with('error', 'Admin users cannot be deleted.');
+        }
+
+        $user->delete();
+
+        return redirect()->back()->with('success', 'User deleted successfully.');
     }
 
     public function sendInvite(User $user)

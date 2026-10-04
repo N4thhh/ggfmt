@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="mx-6 my-6 bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+<div class="mx-6 my-6 bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden">
     
     <div class="bg-[#197B40] px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
         <h1 class="text-white text-xl font-bold">Coaches</h1>
