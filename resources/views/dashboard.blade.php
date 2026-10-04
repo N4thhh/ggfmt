@@ -56,23 +56,23 @@
         <div class="flex gap-2 items-end justify-between w-full h-52 border-b-2 border-gray-100 pb-1 mt-auto">       
           <div class="flex flex-col items-center flex-1 h-full justify-end group">
             <span class="text-[11px] font-bold text-gray-600 mb-1">{{ $stat['hired'] }}</span>
-            <div class="bg-[#ed7d31] w-full max-w-[24px] rounded-t-sm transition-all" style="height: {{ ($stat['hired'] / $max) * 100 }}%; min-height: 4px;"></div>
+            <div class="bg-[#ed7d31] w-full max-w-6 rounded-t-sm transition-all" style="height: {{ ($stat['hired'] / $max) * 100 }}%; min-height: 4px;"></div>
           </div>
           <div class="flex flex-col items-center flex-1 h-full justify-end group">
             <span class="text-[11px] font-bold text-gray-600 mb-1">{{ $stat['graduate'] }}</span>
-            <div class="bg-[#1f4e78] w-full max-w-[24px] rounded-t-sm transition-all" style="height: {{ ($stat['graduate'] / $max) * 100 }}%; min-height: 4px;"></div>
+            <div class="bg-[#1f4e78] w-full max-w-6 rounded-t-sm transition-all" style="height: {{ ($stat['graduate'] / $max) * 100 }}%; min-height: 4px;"></div>
           </div>
           <div class="flex flex-col items-center flex-1 h-full justify-end group">
             <span class="text-[11px] font-bold text-gray-600 mb-1">{{ $stat['resign'] }}</span>
-            <div class="bg-[#2e75b6] w-full max-w-[24px] rounded-t-sm transition-all" style="height: {{ ($stat['resign'] / $max) * 100 }}%; min-height: 4px;"></div>
+            <div class="bg-[#2e75b6] w-full max-w-6 rounded-t-sm transition-all" style="height: {{ ($stat['resign'] / $max) * 100 }}%; min-height: 4px;"></div>
           </div>
           <div class="flex flex-col items-center flex-1 h-full justify-end group">
             <span class="text-[11px] font-bold text-gray-600 mb-1">{{ $stat['failed'] }}</span>
-            <div class="bg-[#70ad47] w-full max-w-[24px] rounded-t-sm transition-all" style="height: {{ ($stat['failed'] / $max) * 100 }}%; min-height: 4px;"></div>
+            <div class="bg-[#70ad47] w-full max-w-6 rounded-t-sm transition-all" style="height: {{ ($stat['failed'] / $max) * 100 }}%; min-height: 4px;"></div>
           </div>
           <div class="flex flex-col items-center flex-1 h-full justify-end group">
             <span class="text-[11px] font-bold text-gray-600 mb-1">{{ $stat['active'] }}</span>
-            <div class="bg-[#a9d18e] w-full max-w-[24px] rounded-t-sm transition-all" style="height: {{ ($stat['active'] / $max) * 100 }}%; min-height: 4px;"></div>
+            <div class="bg-[#a9d18e] w-full max-w-6 rounded-t-sm transition-all" style="height: {{ ($stat['active'] / $max) * 100 }}%; min-height: 4px;"></div>
           </div>
         </div>
 
@@ -110,12 +110,12 @@
           <label class="text-[11px] font-bold text-white/90 uppercase whitespace-nowrap">Batch:</label>
           
           <details class="group">
-            <summary class="bg-white text-gray-800 border-none rounded-md px-3 py-1.5 text-xs outline-none focus:ring-2 focus:ring-[#fba919] cursor-pointer list-none flex items-center justify-between gap-4 min-w-[120px] marker-hidden">
+            <summary class="bg-white text-gray-800 border-none rounded-md px-3 py-1.5 text-xs outline-none focus:ring-2 focus:ring-[#fba919] cursor-pointer list-none flex items-center justify-between gap-4 min-w-30 marker-hidden">
               <span>Select Batch</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-open:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
             </summary>
             
-            <div class="absolute top-full mt-1 left-10 bg-white border border-gray-200 rounded-md shadow-lg p-3 flex flex-col gap-2 min-w-[150px] z-50 max-h-48 overflow-y-auto">
+            <div class="absolute top-full mt-1 left-10 bg-white border border-gray-200 rounded-md shadow-lg p-3 flex flex-col gap-2 min-w-37.5 z-50 max-h-48 overflow-y-auto">
               @foreach($batches as $batch)
                 <label class="flex items-center gap-2 text-xs text-gray-700 cursor-pointer hover:bg-gray-50 p-1 rounded transition">
                   <input type="checkbox" name="batch[]" value="{{ $batch }}" class="rounded text-[#197B40] focus:ring-[#197B40] w-3.5 h-3.5" {{ in_array($batch, request('batch', [])) ? 'checked' : '' }}> 

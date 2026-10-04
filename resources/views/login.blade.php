@@ -2,7 +2,7 @@
 @section('content')
 <div class="min-h-screen bg-[#197B40] flex items-center justify-center p-6">
     
-    <div class="bg-white rounded-[2rem] shadow-2xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
+    <div class="bg-white rounded-4xl shadow-2xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
         
         <div class="w-full md:w-1/2 bg-gray-50 flex items-center justify-center p-12 border-b md:border-b-0 md:border-r border-gray-100">
             <img src="{{ asset('Pina - Say Hi.png') }}" alt="Pina - Say Hi" class="max-w-full h-auto object-contain">
@@ -35,7 +35,7 @@
                 </div>
                 
                 @if ($errors->any())
-                <div class="text-red-500 text-sm mt-[-10px]">
+                <div class="text-red-500 text-sm -mt-2.5">
                     @foreach ($errors->all() as $error)
                         <p>{{ $error }}</p>
                     @endforeach
