@@ -47,4 +47,6 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/assignments/{assignment}/score', [ScoringController::class, 'show'])->name('scoring.show')->middleware(['auth', 'role:panelist']);
 Route::post('/assignments/{assignment}/score', [ScoringController::class, 'store'])->name('scoring.store')->middleware(['auth', 'role:panelist']);
+Route::get('/scoring/{assignment}/admin', [ScoringController::class, 'adminShow'])
+    ->name('scoring.adminShow');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'role:admin,hr']);
