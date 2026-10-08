@@ -1,22 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Container Utama: Grid 12 Kolom dan 6 Baris -->
 <div class="mx-6 my-6 grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-6 gap-4 items-stretch">
-    
-    <!-- ========================================== -->
-    <!-- KOLOM KIRI (Profil, Status, Coach, MT Data)-->
-    <!-- ========================================== -->
+
     <div class="lg:col-start-1 lg:row-start-1 lg:col-span-3 lg:row-span-6 flex flex-col gap-4 h-full">
         
-        <!-- 1. KARTU PROFIL -->
-        <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-4 shrink-0 flex flex-col h-[280px]">
-            <div class="w-full flex-1 bg-gray-100 rounded-[1.5rem] overflow-hidden flex items-center justify-center">
+        <div class="bg-white rounded-4xl shadow-sm border border-gray-100 p-4 shrink-0 flex flex-col h-70">
+            <div class="w-full flex-1 bg-gray-100 rounded-3xl overflow-hidden flex items-center justify-center">
                 <img src="{{ asset('images/mt-profile.jpg') }}" alt="Profile Image" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($managementTrainee->user->name ?? 'MT') }}&background=197B40&color=fff&size=300'">
             </div>
         </div>
 
-        <!-- 2. KARTU STATUS -->
         <div class="bg-[#197B40] rounded-2xl shadow-sm px-4 py-2 flex justify-between items-center w-full shrink-0">
             <span class="bg-white text-[#197B40] px-4 py-1.5 rounded-xl font-extrabold text-sm md:text-base uppercase tracking-wider shadow-sm flex-1 text-center mr-3">
                 {{ $managementTrainee->status }}
@@ -26,8 +20,7 @@
             </a>
         </div>
 
-        <!-- 3. KARTU COACH -->
-        <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden flex flex-col shrink-0">
+        <div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden flex flex-col shrink-0">
             <div class="bg-[#197B40] px-5 py-4 flex justify-between items-center">
                 <h3 class="text-white font-bold text-base uppercase">COACH</h3>
                 <a href="#" class="bg-white/20 p-1.5 rounded-lg text-white hover:bg-[#fba919] transition" title="Assign Coach">
@@ -41,9 +34,7 @@
             </div>
         </div>
 
-        <!-- 4. KARTU MT DATA -->
-        <!-- Menggunakan flex-1 dan min-h-0 agar mengisi sisa ruang ke bawah -->
-        <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden flex flex-col flex-1 min-h-0">
+        <div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden flex flex-col flex-1 min-h-0">
             <div class="bg-[#197B40] px-5 py-4 flex justify-between items-center shrink-0">
                 <h3 class="text-white font-bold text-base">MT Data</h3>
                 <a href="#" class="bg-white/20 p-1.5 rounded-lg text-white hover:bg-[#fba919] transition">
@@ -65,10 +56,7 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- KOLOM TENGAH: ASSIGNMENT (Baris 1-3)       -->
-    <!-- ========================================== -->
-    <div class="lg:col-start-4 lg:row-start-1 lg:col-span-6 lg:row-span-3 bg-white rounded-[2rem] shadow-sm border border-gray-100 p-6 flex flex-col overflow-hidden">
+    <div class="lg:col-start-4 lg:row-start-1 lg:col-span-6 lg:row-span-3 bg-white rounded-4xl shadow-sm border border-gray-100 p-6 flex flex-col overflow-hidden">
         
         <div class="flex flex-wrap gap-2 mb-4 border-b border-gray-100 pb-4 shrink-0">
             @foreach ($managementTrainee->assignment as $index => $assignment)
@@ -82,7 +70,7 @@
 
         <div class="assignment-title-container mb-3 shrink-0">
             @foreach ($managementTrainee->assignment as $index => $assignment)
-                <h2 id="title-{{ $assignment->phase }}" class="text-2xl font-bold text-gray-900 assignment-title break-words" style="display: {{ $index === 0 ? 'block' : 'none' }};">
+                <h2 id="title-{{ $assignment->phase }}" class="text-2xl font-bold text-gray-900 assignment-title wrap-break-word" style="display: {{ $index === 0 ? 'block' : 'none' }};">
                     {{ $assignment->title }}
                 </h2>
             @endforeach
@@ -110,10 +98,7 @@
         @endforeach
     </div>
 
-    <!-- ========================================== -->
-    <!-- KOLOM KANAN: SCORE (Baris 1)               -->
-    <!-- ========================================== -->
-    <div class="lg:col-start-10 lg:row-start-1 lg:col-span-3 lg:row-span-1 bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+    <div class="lg:col-start-10 lg:row-start-1 lg:col-span-3 lg:row-span-1 bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
         <div class="bg-[#197B40] px-4 py-3 text-center shrink-0">
             <h3 class="font-bold text-white text-xs tracking-wider uppercase">Score</h3>
         </div>
@@ -144,10 +129,7 @@
         @endforeach
     </div>
 
-    <!-- ========================================== -->
-    <!-- KOLOM KANAN: COMMENTS (Baris 2-3)          -->
-    <!-- ========================================== -->
-    <div class="lg:col-start-10 lg:row-start-2 lg:col-span-3 lg:row-span-2 bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+    <div class="lg:col-start-10 lg:row-start-2 lg:col-span-3 lg:row-span-2 bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
         <div class="bg-[#197B40] px-4 py-3 text-center shrink-0">
             <h3 class="font-bold text-white text-xs tracking-wider uppercase">Comments</h3>
         </div>
@@ -170,10 +152,7 @@
         @endforeach
     </div>
 
-    <!-- ========================================== -->
-    <!-- BAWAH TENGAH-KANAN: COACHING NOTES         -->
-    <!-- ========================================== -->
-    <div class="lg:col-start-4 lg:row-start-4 lg:col-span-9 lg:row-span-3 bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+    <div class="lg:col-start-4 lg:row-start-4 lg:col-span-9 lg:row-span-3 bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
         
         <div class="bg-[#197B40] px-6 py-4 flex justify-between items-center shrink-0">
             <h3 class="text-white font-bold text-base">Coaching Notes</h3>
@@ -209,9 +188,7 @@
 
 </div>
 
-<!-- ========================================== -->
-<!-- SCRIPT & STYLE LOGIKA                      -->
-<!-- ========================================== -->
+
 <script>
     function showAssignment(phase) {
         document.querySelectorAll('.assignment-content, .score-content, .comment-content').forEach(el => {
