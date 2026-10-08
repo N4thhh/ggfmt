@@ -2,11 +2,8 @@
 
 @section('content')
 <div class="mx-6 my-6 grid grid-cols-1 md:grid-cols-12 grid-rows-6 gap-4 items-stretch h-full min-h-[80vh]">
-  
-  <!-- ========================================== -->
-  <!-- 1. HEADER COACH (Atas, Lebar Penuh)        -->
-  <!-- ========================================== -->
-  <div class="col-start-1 col-span-1 md:col-start-1 md:col-span-12 row-span-1 bg-[#197B40] rounded-[2rem] p-8 md:p-10 shadow-md flex items-center justify-between border border-[#146032]">
+
+  <div class="col-start-1 col-span-1 md:col-start-1 md:col-span-12 row-span-1 bg-[#197B40] rounded-4xl p-8 md:p-10 shadow-md flex items-center justify-between border border-[#146032]">
     <div class="flex flex-row items-center gap-6">
       <img src="{{ asset('Pina - Info.png') }}" alt="Pina Info" class="w-20 md:w-24 drop-shadow-md">
       
@@ -22,13 +19,9 @@
       <p class="text-white/90 text-sm md:text-base font-medium tracking-wide uppercase"># of MTs</p>
     </div>
   </div>
-  
-  <!-- ========================================== -->
-  <!-- 2. DAFTAR MT (Kiri, Current/History)       -->
-  <!-- ========================================== -->
-  <div class="col-start-1 col-span-1 md:col-start-1 md:col-span-4 row-span-5 bg-white rounded-[2rem] shadow-md border border-gray-300 overflow-hidden flex flex-col h-[600px] md:h-auto">
-    
-    <!-- Tab Buttons -->
+
+  <div class="col-start-1 col-span-1 md:col-start-1 md:col-span-4 row-span-5 bg-white rounded-4xl shadow-md border border-gray-300 overflow-hidden flex flex-col h-150 md:h-auto">
+
     <div class="flex flex-wrap gap-2 p-5 border-b-2 border-gray-200 shrink-0 bg-gray-50">
       <button id="btn-list-current" onclick="showList('current')" class="list-tab-btn px-4 py-2 rounded-lg font-bold text-xs transition-all duration-200 bg-[#fba919] text-white shadow-md flex-1">
         Current
@@ -38,7 +31,6 @@
       </button>
     </div>
 
-    <!-- Tab Content: CURRENT -->
     <div id="current" class="tab-content flex-1 overflow-y-auto custom-scrollbar p-3" style="display: block;">
       <div class="flex flex-col gap-3 h-full">
         @forelse ($coach->coachHistory()->where('ended_at', null)->get() as $coachHistory)
@@ -56,8 +48,7 @@
             <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500 group-hover:text-[#197B40] transition-colors"></i>
           </div>
         @empty
-          <!-- TOMBOL ASSIGN MT PENGGANTI PLACEHOLDER -->
-          <a href="#" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 min-h-[120px] text-gray-400 hover:text-[#197B40] hover:border-[#197B40] hover:bg-[#197B40]/5 transition-all cursor-pointer group shadow-sm">
+          <a href="#" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 min-h-30 text-gray-400 hover:text-[#197B40] hover:border-[#197B40] hover:bg-[#197B40]/5 transition-all cursor-pointer group shadow-sm">
               <i data-lucide="plus" class="w-8 h-8 mb-2 group-hover:scale-110 transition-transform duration-200"></i>
               <span class="text-sm font-bold tracking-wide">Assign MT</span>
           </a>
@@ -65,7 +56,6 @@
       </div>
     </div>
 
-    <!-- Tab Content: HISTORY -->
     <div id="history" class="tab-content flex-1 overflow-y-auto custom-scrollbar p-3" style="display: none;">
       <div class="flex flex-col gap-3">
         @forelse ($coach->coachHistory()->where('ended_at', '!=', null)->get() as $coachHistory)
@@ -88,11 +78,8 @@
       </div>
     </div>
   </div>
-  
-  <!-- ========================================== -->
-  <!-- 3. COACHING NOTES PANNEL (Kanan)           -->
-  <!-- ========================================== -->
-  <div class="col-start-1 col-span-1 md:col-start-5 md:col-span-8 row-span-5 bg-white rounded-[2rem] shadow-md border border-gray-300 overflow-hidden flex flex-col h-[600px] md:h-auto">
+
+  <div class="col-start-1 col-span-1 md:col-start-5 md:col-span-8 row-span-5 bg-white rounded-4xl shadow-md border border-gray-300 overflow-hidden flex flex-col h-150 md:h-auto">
     
     <div id="initial-notes-state" class="flex flex-col h-full items-center justify-center p-6 text-gray-500 flex-1 bg-gray-100">
         <i data-lucide="inbox" class="w-16 h-16 mb-4 opacity-40"></i>
@@ -148,7 +135,6 @@
         });
         document.getElementById(list).style.display = 'block';
 
-        // Update warna tab
         document.querySelectorAll('.list-tab-btn').forEach(btn => {
             btn.classList.remove('bg-[#fba919]', 'text-white', 'shadow-md');
             btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
