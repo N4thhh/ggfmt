@@ -50,3 +50,8 @@ Route::post('/assignments/{assignment}/score', [ScoringController::class, 'store
 Route::get('/scoring/{assignment}/admin', [ScoringController::class, 'adminShow'])
     ->name('scoring.adminShow');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'role:admin,hr']);
+
+Route::patch('/mt/{managementTrainee}/status', [MtController::class, 'updateStatus'])->name('mt.updateStatus');
+Route::post('/mt/{managementTrainee}/assign-coach', [MtController::class, 'assignCoach'])->name('mt.assignCoach');
+Route::patch('/mt/{managementTrainee}', [MtController::class, 'update'])->name('mt.update');
+Route::post('/assignment/{assignment}/assign-panelist', [MtController::class, 'assignPanelist'])->name('assignment.assignPanelist');

@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
+@if(session('success'))
+<div class="mx-6 mt-6 bg-green-50 border border-green-200 text-green-700 text-sm font-semibold px-4 py-3 rounded-xl">
+    {{ session('success') }}
+</div>
+@endif
+
 <div class="mx-6 my-6 grid grid-cols-1 lg:grid-cols-12 lg:grid-rows-6 gap-4 items-stretch">
 
     <div class="lg:col-start-1 lg:row-start-1 lg:col-span-3 lg:row-span-6 flex flex-col gap-4 h-full">
@@ -15,7 +22,7 @@
             <span class="bg-white text-[#197B40] px-4 py-1.5 rounded-xl font-extrabold text-sm md:text-base uppercase tracking-wider shadow-sm flex-1 text-center mr-3">
                 {{ $managementTrainee->status }}
             </span>
-            <a href="#" class="bg-white/20 p-2 rounded-xl text-white hover:bg-[#fba919] transition shrink-0" title="Edit Status">
+            <a href="#" onclick="openModal('modal-status'); return false;" class="bg-white/20 p-2 rounded-xl text-white hover:bg-[#fba919] transition shrink-0" title="Edit Status">
                 <i data-lucide="edit-3" class="w-4 h-4"></i>
             </a>
         </div>
@@ -23,7 +30,7 @@
         <div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden flex flex-col shrink-0">
             <div class="bg-[#197B40] px-5 py-4 flex justify-between items-center">
                 <h3 class="text-white font-bold text-base uppercase">COACH</h3>
-                <a href="#" class="bg-white/20 p-1.5 rounded-lg text-white hover:bg-[#fba919] transition" title="Assign Coach">
+                <a href="#" onclick="openModal('modal-coach'); return false;" class="bg-white/20 p-1.5 rounded-lg text-white hover:bg-[#fba919] transition" title="Assign Coach">
                     <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -37,7 +44,7 @@
         <div class="bg-white rounded-4xl shadow-sm border border-gray-100 overflow-hidden flex flex-col flex-1 min-h-0">
             <div class="bg-[#197B40] px-5 py-4 flex justify-between items-center shrink-0">
                 <h3 class="text-white font-bold text-base">MT Data</h3>
-                <a href="#" class="bg-white/20 p-1.5 rounded-lg text-white hover:bg-[#fba919] transition">
+                <a href="#" onclick="openModal('modal-data'); return false;" class="bg-white/20 p-1.5 rounded-lg text-white hover:bg-[#fba919] transition">
                     <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
@@ -112,7 +119,7 @@
                         <span class="font-bold text-[#fba919]">{{ $score->score ?? '-' }}</span>
                     </div>
                 @empty
-                    <a href="#" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-4 flex-1 text-gray-400 hover:text-[#197B40] hover:border-[#197B40] hover:bg-gray-50 transition-all cursor-pointer group">
+                    <a href="#" onclick="openModal('modal-panelist-{{ $assignment->phase }}'); return false;" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-4 flex-1 text-gray-400 hover:text-[#197B40] hover:border-[#197B40] hover:bg-gray-50 transition-all cursor-pointer group">
                         <i data-lucide="plus" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform duration-200"></i>
                         <span class="text-xs font-bold tracking-wide">Assign Panelist</span>
                     </a>
@@ -188,6 +195,11 @@
 
 </div>
 
+{{-- Modal partials — each file lives directly in resources/views/mt/ --}}
+@include('mt.modal-status')
+@include('mt.modal-coach')
+@include('mt.modal-data')
+@include('mt.modal-panelist')
 
 <script>
     function showAssignment(phase) {
@@ -222,6 +234,14 @@
         if(targetNote) {
             targetNote.style.display = 'block';
         }
+    }
+
+    function openModal(id) {
+        document.getElementById(id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.add('hidden');
     }
 
     document.addEventListener("DOMContentLoaded", function() {
