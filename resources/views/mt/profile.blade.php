@@ -119,11 +119,12 @@
                         <span class="font-bold text-[#fba919]">{{ $score->score ?? '-' }}</span>
                     </div>
                 @empty
-                    <a href="#" onclick="openModal('modal-panelist-{{ $assignment->phase }}'); return false;" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-4 flex-1 text-gray-400 hover:text-[#197B40] hover:border-[#197B40] hover:bg-gray-50 transition-all cursor-pointer group">
-                        <i data-lucide="plus" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform duration-200"></i>
-                        <span class="text-xs font-bold tracking-wide">Assign Panelist</span>
-                    </a>
                 @endforelse
+
+                <a href="#" onclick="openModal('modal-panelist-{{ $assignment->phase }}'); return false;" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-4 {{ $assignment->score->isEmpty() ? 'flex-1' : '' }} text-gray-400 hover:text-[#197B40] hover:border-[#197B40] hover:bg-gray-50 transition-all cursor-pointer group">
+                    <i data-lucide="plus" class="w-6 h-6 mb-1 group-hover:scale-110 transition-transform duration-200"></i>
+                    <span class="text-xs font-bold tracking-wide">Assign Panelist</span>
+                </a>
             </div>
             
             @if($assignment->score->isNotEmpty())
@@ -237,11 +238,17 @@
     }
 
     function openModal(id) {
-        document.getElementById(id).classList.remove('hidden');
+        const el = document.getElementById(id);
+        el.classList.remove('hidden');
+        el.style.display = 'flex';
+        el.style.alignItems = 'center';
+        el.style.justifyContent = 'center';
     }
 
     function closeModal(id) {
-        document.getElementById(id).classList.add('hidden');
+        const el = document.getElementById(id);
+        el.classList.add('hidden');
+        el.style.display = 'none';
     }
 
     document.addEventListener("DOMContentLoaded", function() {

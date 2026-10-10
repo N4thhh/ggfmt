@@ -41,5 +41,6 @@
     <script>
       lucide.createIcons();
     </script>
+    @stack('modals')
 </body>
 </html>

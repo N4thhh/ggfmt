@@ -113,18 +113,30 @@ class MtController extends Controller
     }
 
     public function assignPanelist(Request $request, Assignment $assignment)
-    {
-        $request->validate([
-            'panelist_id' => 'required|exists:panelists,id',
-        ]);
+{
+    $request->validate([
+        'panelist_id_1' => 'nullable|exists:panelists,id',
+        'panelist_id_2' => 'nullable|exists:panelists,id',
+        'panelist_id_3' => 'nullable|exists:panelists,id',
+    ]);
 
+    $panelistIds = collect([
+        $request->panelist_id_1,
+        $request->panelist_id_2,
+        $request->panelist_id_3,
+    ])->filter()->unique();
+
+    $assignment->panelistAccess()->delete();
+
+    foreach ($panelistIds as $panelistId) {
         PanelistAccess::create([
-            'panelist_id' => $request->panelist_id,
+            'panelist_id' => $panelistId,
             'assignment_id' => $assignment->id,
             'assigned_by' => Auth::id(),
         ]);
-
-        return back()->with('success', 'Panelist berhasil ditugaskan.');
     }
+
+    return back()->with('success', 'Panelist berhasil diperbarui.');
+}
 
 }

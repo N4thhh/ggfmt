@@ -75,4 +75,30 @@ class PanelistController extends Controller
     {
         //
     }
+
+    public function searchAjax(Request $request)
+{
+    try {
+        $query = $request->get('q');
+        
+        $panelists = \App\Models\Panelist::whereHas('user', function($q) use ($query) {
+            $q->where('name', 'like', "%{$query}%");
+        })->get();
+
+        $formattedPanelists = $panelists->map(function($panelist) {
+            return [
+                'id' => $panelist->id,
+                'name' => $panelist->user->name ?? 'Unknown',
+                'initial' => strtoupper(substr($panelist->user->name ?? 'U', 0, 1))
+            ];
+        });
+
+        return response()->json($formattedPanelists);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'pesan_error' => $e->getMessage()
+        ], 500);
+    }
+}
 }

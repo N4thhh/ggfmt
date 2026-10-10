@@ -55,3 +55,5 @@ Route::patch('/mt/{managementTrainee}/status', [MtController::class, 'updateStat
 Route::post('/mt/{managementTrainee}/assign-coach', [MtController::class, 'assignCoach'])->name('mt.assignCoach');
 Route::patch('/mt/{managementTrainee}', [MtController::class, 'update'])->name('mt.update');
 Route::post('/assignment/{assignment}/assign-panelist', [MtController::class, 'assignPanelist'])->name('assignment.assignPanelist');
+Route::get('/coaches/search', [App\Http\Controllers\CoachController::class, 'searchAjax'])->name('coaches.searchAjax');
+Route::get('/panelists/search', [App\Http\Controllers\PanelistController::class, 'searchAjax'])->name('panelists.searchAjax');

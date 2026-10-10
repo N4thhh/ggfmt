@@ -1,4 +1,4 @@
-<div id="modal-status" class="hidden fixed inset-0 bg-black/50 z-50 items-center justify-center p-4">
+<div id="modal-status" class="hidden fixed inset-0 bg-black/50 z-50 items-center justify-center p-4" style="display:none; align-items:center; justify-content:center;">
     <div class="bg-white rounded-2xl p-6 w-full max-w-sm">
         <h3 class="font-bold text-lg mb-4 text-gray-900">Edit Status</h3>
         <form method="POST" action="{{ route('mt.updateStatus', $managementTrainee) }}">

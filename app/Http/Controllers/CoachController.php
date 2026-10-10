@@ -67,4 +67,37 @@ class CoachController extends Controller
     {
         //
     }
+
+    public function searchAjax(\Illuminate\Http\Request $request)
+{
+    try {
+        $query = $request->get('q');
+        
+        $coaches = \App\Models\Coach::withCount(['coachHistory' => function($q) {
+            $q->whereNull('ended_at');
+        }])
+        ->whereHas('user', function($q) use ($query) {
+            $q->where('name', 'like', "%{$query}%");
+        })
+        ->get();
+
+        $formattedCoaches = $coaches->map(function($coach) {
+            return [
+                'id' => $coach->id,
+                'name' => $coach->user->name ?? 'Unknown',
+                'mt_count' => $coach->coach_history_count ?? 0,
+                'initial' => strtoupper(substr($coach->user->name ?? 'U', 0, 1))
+            ];
+        });
+
+        return response()->json($formattedCoaches);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'pesan_error' => $e->getMessage(),
+            'file' => $e->getFile(),
+            'baris' => $e->getLine()
+        ], 500);
+    }
+}
 }
