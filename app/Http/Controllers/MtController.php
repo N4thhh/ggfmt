@@ -139,4 +139,34 @@ class MtController extends Controller
     return back()->with('success', 'Panelist berhasil diperbarui.');
 }
 
+public function searchAjax(Request $request)
+{
+    try {
+        $query = $request->get('q');
+        
+        // Cari MT berdasarkan nama user ATAU index_number
+        $mts = \App\Models\ManagementTrainee::whereHas('user', function($q) use ($query) {
+            $q->where('name', 'like', "%{$query}%");
+        })
+        ->orWhere('index_number', 'like', "%{$query}%")
+        ->get();
+
+        $formattedMts = $mts->map(function($mt) {
+            return [
+                'id' => $mt->id,
+                'name' => $mt->user->name ?? 'Unknown',
+                'index_number' => $mt->index_number ?? '-',
+                'initial' => strtoupper(substr($mt->user->name ?? 'M', 0, 1))
+            ];
+        });
+
+        return response()->json($formattedMts);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'pesan_error' => $e->getMessage()
+        ], 500);
+    }
+}
+
 }

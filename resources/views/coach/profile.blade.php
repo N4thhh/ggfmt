@@ -22,13 +22,16 @@
 
   <div class="col-start-1 col-span-1 md:col-start-1 md:col-span-4 row-span-5 bg-white rounded-4xl shadow-md border border-gray-300 overflow-hidden flex flex-col h-150 md:h-auto">
 
-    <div class="flex flex-wrap gap-2 p-5 border-b-2 border-gray-200 shrink-0 bg-gray-50">
+    <div class="flex flex-wrap items-center gap-2 p-5 border-b-2 border-gray-200 shrink-0 bg-gray-50">
       <button id="btn-list-current" onclick="showList('current')" class="list-tab-btn px-4 py-2 rounded-lg font-bold text-xs transition-all duration-200 bg-[#fba919] text-white shadow-md flex-1">
         Current
       </button>
       <button id="btn-list-history" onclick="showList('history')" class="list-tab-btn px-4 py-2 rounded-lg font-bold text-xs transition-all duration-200 bg-gray-200 text-gray-700 hover:bg-gray-300 flex-1">
         History
       </button>
+      <a href="#" onclick="openModal('modal-assign-mt'); return false;" class="p-2 rounded-lg bg-[#197B40] text-white hover:bg-[#146032] transition shrink-0" title="Assign MT">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+      </a>
     </div>
 
     <div id="current" class="tab-content flex-1 overflow-y-auto custom-scrollbar p-3" style="display: block;">
@@ -48,7 +51,7 @@
             <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500 group-hover:text-[#197B40] transition-colors"></i>
           </div>
         @empty
-          <a href="#" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 min-h-30 text-gray-400 hover:text-[#197B40] hover:border-[#197B40] hover:bg-[#197B40]/5 transition-all cursor-pointer group shadow-sm">
+          <a href="#" onclick="openModal('modal-assign-mt'); return false;" class="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl p-6 min-h-30 text-gray-400 hover:text-[#197B40] hover:border-[#197B40] hover:bg-[#197B40]/5 transition-all cursor-pointer group shadow-sm">
               <i data-lucide="plus" class="w-8 h-8 mb-2 group-hover:scale-110 transition-transform duration-200"></i>
               <span class="text-sm font-bold tracking-wide">Assign MT</span>
           </a>
@@ -128,6 +131,8 @@
   </div>
 </div>
 
+@include('coach.modal-assignmt')
+
 <script>
     function showList(list) {
         document.querySelectorAll('.tab-content').forEach(el => {
@@ -176,6 +181,20 @@
         if(targetNote) {
             targetNote.style.display = 'block';
         }
+    }
+
+    function openModal(id) {
+        const el = document.getElementById(id);
+        el.classList.remove('hidden');
+        el.style.display = 'flex';
+        el.style.alignItems = 'center';
+        el.style.justifyContent = 'center';
+    }
+
+    function closeModal(id) {
+        const el = document.getElementById(id);
+        el.classList.add('hidden');
+        el.style.display = 'none';
     }
 </script>
 

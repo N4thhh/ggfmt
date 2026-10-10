@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Coach;
 use Illuminate\Support\Facades\Auth;
+use App\Models\CoachHistory;
 
 class CoachController extends Controller
 {
@@ -99,5 +100,24 @@ class CoachController extends Controller
             'baris' => $e->getLine()
         ], 500);
     }
+}
+
+public function assignMt(Request $request, Coach $coach)
+{
+    $request->validate([
+        'mt_id' => 'required|exists:management_trainees,id',
+    ]);
+
+    CoachHistory::where('mt_id', $request->mt_id)
+        ->whereNull('ended_at')
+        ->update(['ended_at' => now()]);
+
+    CoachHistory::create([
+        'mt_id' => $request->mt_id,
+        'coach_id' => $coach->id,
+        'assigned_by' => Auth::id(),
+    ]);
+
+    return back()->with('success', 'MT berhasil ditugaskan ke coach ini.');
 }
 }
