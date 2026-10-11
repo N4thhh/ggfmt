@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\ManagementTrainee;
 use Illuminate\Http\Request;
+use App\Models\CoachHistory;
+use App\Models\PanelistAccess;
+use App\Models\MtStatusLog;
+use Illuminate\Support\Facades\Auth;
 
 class MtController extends Controller
 {

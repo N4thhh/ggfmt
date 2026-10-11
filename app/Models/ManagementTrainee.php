@@ -16,6 +16,22 @@ class ManagementTrainee extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
+    protected $fillable = [
+        'user_id',
+        'mt_program_id',
+        'index_number',
+        'status',
+        'placement',
+        'major',
+        'university',
+        'education_degree',
+        'mbti',
+        'batch',
+        'assignment_leader',
+        'program_leader',
+        'profile_picture',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

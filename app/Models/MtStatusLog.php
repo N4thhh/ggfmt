@@ -16,6 +16,12 @@ class MtStatusLog extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
+    protected $fillable = [
+        'mt_id',
+        'status',
+        'changed_by',
+    ];
+
     public function managementTrainee()
     {
         return $this->belongsTo(ManagementTrainee::class,'mt_id');
