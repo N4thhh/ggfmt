@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Panelist;
+use App\Models\PanelistAccess;
+use Illuminate\Support\Facades\Auth;
 
 class PanelistController extends Controller
 {
@@ -94,6 +96,66 @@ class PanelistController extends Controller
         });
 
         return response()->json($formattedPanelists);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'pesan_error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+public function assignAssignment(Request $request, Panelist $panelist)
+{
+    $request->validate([
+        'assignment_id' => 'required|exists:assignments,id',
+    ]);
+
+    $alreadyAssigned = PanelistAccess::where('panelist_id', $panelist->id)
+        ->where('assignment_id', $request->assignment_id)
+        ->exists();
+
+    if ($alreadyAssigned) {
+        return back()->with('error', 'Panelist ini sudah ditugaskan ke assignment tersebut.');
+    }
+
+    $currentCount = PanelistAccess::where('assignment_id', $request->assignment_id)->count();
+    if ($currentCount >= 3) {
+        return back()->with('error', 'Assignment ini sudah punya 3 panelist (maksimal).');
+    }
+
+    PanelistAccess::create([
+        'panelist_id' => $panelist->id,
+        'assignment_id' => $request->assignment_id,
+        'assigned_by' => Auth::id(),
+    ]);
+
+    return back()->with('success', 'Assignment berhasil ditugaskan ke panelist ini.');
+}
+
+public function searchAssignmentAjax(\Illuminate\Http\Request $request)
+{
+    try {
+        $query = $request->get('q');
+        
+        // Cari assignments berdasarkan nama MT atau Phase
+        $assignments = \App\Models\Assignment::with('managementTrainee.user')
+            ->whereHas('managementTrainee.user', function($q) use ($query) {
+                $q->where('name', 'like', "%{$query}%");
+            })
+            ->orWhere('phase', 'like', "%{$query}%")
+            ->get();
+
+        $formattedAssignments = $assignments->map(function($assignment) {
+            $mtName = $assignment->managementTrainee->user->name ?? 'Unknown MT';
+            return [
+                'id' => $assignment->id,
+                'mt_name' => $mtName,
+                'phase' => $assignment->phase,
+                'initial' => strtoupper(substr($mtName, 0, 1))
+            ];
+        });
+
+        return response()->json($formattedAssignments);
 
     } catch (\Exception $e) {
         return response()->json([

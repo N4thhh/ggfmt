@@ -12,6 +12,12 @@
         <p class="text-2xl md:text-3xl font-black text-white">{{ $panelist->user->name }}</p>
       </div>
     </div>
+
+    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'hr')
+    <a href="#" onclick="openModal('modal-assign-assignment'); return false;" class="bg-white/15 hover:bg-[#fba919] text-white font-bold text-sm px-5 py-2.5 rounded-xl transition-all shadow-sm flex items-center gap-2">
+        <i data-lucide="plus" class="w-4 h-4"></i> Assign Assignment
+    </a>
+    @endif
   </div>
 
   <div class="bg-white rounded-4xl shadow-md border border-gray-300 overflow-hidden flex flex-col flex-1">
@@ -65,7 +71,7 @@
 
           @if(auth()->user()->role === 'admin' || auth()->user()->role === 'hr')
             <div class="h-full">
-                <a href="#" class="flex flex-col items-center justify-center p-6 text-gray-400 bg-white rounded-2xl border-2 border-dashed border-gray-300 hover:text-[#197B40] hover:border-[#197B40] hover:bg-[#197B40]/5 transition-all cursor-pointer group shadow-sm h-full min-h-62.5">
+                <a href="#" onclick="openModal('modal-assign-assignment'); return false;" class="flex flex-col items-center justify-center p-6 text-gray-400 bg-white rounded-2xl border-2 border-dashed border-gray-300 hover:text-[#197B40] hover:border-[#197B40] hover:bg-[#197B40]/5 transition-all cursor-pointer group shadow-sm h-full min-h-62.5">
                     <i data-lucide="plus" class="w-10 h-10 mb-3 group-hover:scale-110 transition-transform duration-200"></i>
                     <span class="text-sm font-bold tracking-wide text-center">Assign MT Assignment</span>
                 </a>
@@ -127,6 +133,10 @@
   </div>
 </div>
 
+@if(auth()->user()->role === 'admin' || auth()->user()->role === 'hr')
+    @include('panelist.modal-assignassignment')
+@endif
+
 <script>
     function showFilter(filter) {
         document.querySelectorAll('.tab-content').forEach(el => {
@@ -145,6 +155,20 @@
             activeBtn.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
             activeBtn.classList.add('bg-[#fba919]', 'text-white', 'shadow-md');
         }
+    }
+
+    function openModal(id) {
+        const el = document.getElementById(id);
+        el.classList.remove('hidden');
+        el.style.display = 'flex';
+        el.style.alignItems = 'center';
+        el.style.justifyContent = 'center';
+    }
+
+    function closeModal(id) {
+        const el = document.getElementById(id);
+        el.classList.add('hidden');
+        el.style.display = 'none';
     }
 </script>
 

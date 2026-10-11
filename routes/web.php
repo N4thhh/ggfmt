@@ -59,3 +59,5 @@ Route::get('/coaches/search', [App\Http\Controllers\CoachController::class, 'sea
 Route::get('/panelists/search', [App\Http\Controllers\PanelistController::class, 'searchAjax'])->name('panelists.searchAjax');
 Route::post('/coach/{coach}/assign-mt', [CoachController::class, 'assignMt'])->name('coach.assignMt');
 Route::get('/mts/search', [App\Http\Controllers\MtController::class, 'searchAjax'])->name('mts.searchAjax');
+Route::post('/panelist/{panelist}/assign-assignment', [PanelistController::class, 'assignAssignment'])->name('panelist.assignAssignment');
+Route::get('/assignments/search', [App\Http\Controllers\PanelistController::class, 'searchAssignmentAjax'])->name('assignments.searchAjax');
