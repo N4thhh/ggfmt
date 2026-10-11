@@ -10,26 +10,43 @@ use Illuminate\Support\Facades\Auth;
 
 class ScoringController extends Controller
 {
-    public function show(Assignment $assignment)
+    public function adminShow(Assignment $assignment)
     {
-        $panelist = Auth::user()->panelist;
-        if (!$panelist) {
-            abort(403);
-        }
-            
-        $access = PanelistAccess::where('panelist_id', $panelist->id)
-            ->where('assignment_id', $assignment->id)
-            ->first();
-        if(!$access){
+        $user = Auth::user();
+        $panelist = null;
+        $existingScore = null;
+        $canScore = false;
+
+        if ($user->role === 'panelist') {
+            $panelist = $user->panelist;
+            if (!$panelist) {
+                abort(403);
+            }
+
+            $access = PanelistAccess::where('panelist_id', $panelist->id)
+                ->where('assignment_id', $assignment->id)
+                ->first();
+
+            if (!$access) {
+                abort(403);
+            }
+
+            $canScore = true;
+
+            $existingScore = Score::where('panelist_id', $panelist->id)
+                ->where('assignment_id', $assignment->id)
+                ->whereNotNull('submitted_at')
+                ->first();
+
+        } elseif (!in_array($user->role, ['admin', 'hr'])) {
+            // selain panelist/admin/hr, tidak boleh akses halaman ini
             abort(403);
         }
 
-        $existingScore = Score::where('panelist_id', $panelist->id)
-            ->where('assignment_id', $assignment->id)
-            ->whereNotNull('submitted_at')
-            ->first();
-        
-        return view('panelist.scoring', compact('assignment', 'panelist', 'existingScore'));
+        // dipakai buat tampilkan rekap semua score (admin/hr/panelist sama-sama bisa lihat)
+        $assignment->load('managementTrainee.user', 'score.panelist.user');
+
+        return view('panelist.scoring', compact('assignment', 'panelist', 'existingScore', 'canScore'));
     }
 
     public function store(Request $request, Assignment $assignment)
@@ -41,6 +58,14 @@ class ScoringController extends Controller
 
         $panelist = Auth::user()->panelist;
         if (!$panelist) {
+            abort(403);
+        }
+
+        $hasAccess = PanelistAccess::where('panelist_id', $panelist->id)
+            ->where('assignment_id', $assignment->id)
+            ->exists();
+
+        if (!$hasAccess) {
             abort(403);
         }
 
@@ -57,7 +82,5 @@ class ScoringController extends Controller
         );
 
         return redirect()->back()->with('success', 'Score submitted successfully.');
-
     }
-
 }

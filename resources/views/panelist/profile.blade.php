@@ -12,12 +12,6 @@
         <p class="text-2xl md:text-3xl font-black text-white">{{ $panelist->user->name }}</p>
       </div>
     </div>
-
-    @if(auth()->user()->role === 'admin' || auth()->user()->role === 'hr')
-    <a href="#" onclick="openModal('modal-assign-assignment'); return false;" class="bg-white/15 hover:bg-[#fba919] text-white font-bold text-sm px-5 py-2.5 rounded-xl transition-all shadow-sm flex items-center gap-2">
-        <i data-lucide="plus" class="w-4 h-4"></i> Assign Assignment
-    </a>
-    @endif
   </div>
 
   <div class="bg-white rounded-4xl shadow-md border border-gray-300 overflow-hidden flex flex-col flex-1">
