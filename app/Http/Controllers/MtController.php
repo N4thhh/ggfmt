@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\CoachHistory;
 use App\Models\PanelistAccess;
 use App\Models\MtStatusLog;
+use App\Models\Assignment;
+use App\Models\Panelist;
+use App\Models\User;
+use App\Models\Coach;
+use App\Models\MtProgram;
 use Illuminate\Support\Facades\Auth;
 
 class MtController extends Controller
@@ -77,24 +82,32 @@ class MtController extends Controller
         return back()->with('success', 'Status berhasil diperbarui.');
     }
 
-    public function assignCoach(Request $request, ManagementTrainee $managementTrainee)
-    {
-        $request->validate([
-            'coach_id' => 'required|exists:coaches,id',
-        ]);
+public function assignCoach(Request $request, ManagementTrainee $managementTrainee)
+{
+    $request->validate([
+        'coach_id' => 'required|exists:coaches,id',
+    ]);
 
-        $managementTrainee->coachHistory()
-            ->whereNull('ended_at')
-            ->update(['ended_at' => now()]);
+    $currentHistory = $managementTrainee->coachHistory()
+        ->whereNull('ended_at')
+        ->first();
 
-        CoachHistory::create([
-            'mt_id' => $managementTrainee->id,
-            'coach_id' => $request->coach_id,
-            'assigned_by' => Auth::id(),
-        ]);
-
-        return back()->with('success', 'Coach berhasil ditugaskan.');
+    if ($currentHistory && $currentHistory->coach_id === $request->coach_id) {
+        return redirect()->route('mt.show', $managementTrainee)->with('success', 'Tidak ada perubahan coach.');
     }
+
+    if ($currentHistory) {
+        $currentHistory->update(['ended_at' => now()]);
+    }
+
+    CoachHistory::create([
+        'mt_id' => $managementTrainee->id,
+        'coach_id' => $request->coach_id,
+        'assigned_by' => Auth::id(),
+    ]);
+
+    return redirect()->route('mt.show', $managementTrainee)->with('success', 'Coach berhasil ditugaskan.');
+}
 
     public function update(Request $request, ManagementTrainee $managementTrainee)
     {

@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use App\Models\ManagementTrainee;
+use App\Models\Coach;
+use App\Models\Panelist;
 
 class UserController extends Controller
 {
@@ -32,12 +35,64 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'role' => $request->role
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required|in:mt,coach,panelist',
+
+            'index_number' => [
+                'required',
+                'string',
+                'unique:management_trainees,index_number',
+                'unique:coaches,index_number',
+                'unique:panelists,index_number',
+            ],
+
+            'mt_program_id' => 'required_if:role,mt|exists:mt_programs,id',
+            'batch' => 'required_if:role,mt|string',
+            'major' => 'required_if:role,mt|string',
+            'university' => 'required_if:role,mt|string',
+            'education_degree' => 'required_if:role,mt|string',
+            'mbti' => 'required_if:role,mt|string',
+            'placement' => 'required_if:role,mt|string',
+            'program_leader' => 'required_if:role,mt|string',
+            'assignment_leader' => 'required_if:role,mt|string',
         ]);
-        return redirect()->route('user.index');
+
+        DB::transaction(function () use ($validated) {
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'role' => $validated['role'],
+            ]);
+
+            match ($validated['role']) {
+                'mt' => ManagementTrainee::create([
+                    'user_id' => $user->id,
+                    'index_number' => $validated['index_number'],
+                    'mt_program_id' => $validated['mt_program_id'],
+                    'batch' => $validated['batch'],
+                    'major' => $validated['major'],
+                    'university' => $validated['university'],
+                    'education_degree' => $validated['education_degree'],
+                    'mbti' => $validated['mbti'],
+                    'placement' => $validated['placement'],
+                    'program_leader' => $validated['program_leader'],
+                    'assignment_leader' => $validated['assignment_leader'],
+                    'status' => 'active',
+                ]),
+                'coach' => Coach::create([
+                    'user_id' => $user->id,
+                    'index_number' => $validated['index_number'],
+                ]),
+                'panelist' => Panelist::create([
+                    'user_id' => $user->id,
+                    'index_number' => $validated['index_number'],
+                ]),
+            };
+        });
+
+        return redirect()->route('user.index')->with('success', 'User berhasil dibuat.');
     }
 
     /**

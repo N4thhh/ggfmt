@@ -1,37 +1,56 @@
 @extends('layouts.app')
+
 @section('content')
-<div class="grid grid-cols-4 md:grid-cols-5 grid-rows-4 md:grid-rows-6 gap-2 md:gap-2 m-4">
-    
-    <div class="col-start-1 row-start-1 col-span-4 md:col-start-2 md:row-start-2 md:col-span-3 md:row-span-1 bg-gray-300 rounded-md p-10">
-        <p>Welcome, <strong>{{ $user->name }}</strong></p>
-        <p>Please set up your account</p>
-    </div>
-    
-    <div class="col-start-1 row-start-2 col-span-4 row-span-3 md:col-start-2 md:row-start-3 md:col-span-3 md:row-span-3 bg-gray-300 rounded-md p-10">
-        <form method="POST" action="{{ route('account-setup.store', $token) }}">
-            @csrf
-            @if ($errors->any())
-            <div class="text-red-500 mb-4">
-                @foreach ($errors->all() as $error)
-                <p>{{ $error }}</p>
-                @endforeach
+<div class="min-h-[80vh] flex items-center justify-center p-4">
+    <div class="w-full max-w-md flex flex-col gap-4">
+        
+        <div class="bg-[#197B40] rounded-4xl p-8 shadow-md flex flex-col items-center text-center border border-[#146032]">
+            <div class="w-14 h-14 bg-[#fba919] rounded-full flex items-center justify-center text-white mb-4 shadow-sm">
+                <i data-lucide="user-check" class="w-7 h-7"></i>
             </div>
-            @endif
-            <input type="hidden" name="token" value="{{ $token }}">
-            <div class="mb-4">
-                <label for="password" class="block text-gray-700 font-bold mb-2">Password:</label>
-                <input type="password" id="password" name="password" class="w-full p-2 border border-gray-300 rounded">
-            </div>
-            <div class="mb-4">
-                <label for="password_confirmation" class="block text-gray-700 font-bold mb-2">Confirm Password:</label>
-                <input type="password" id="password_confirmation" name="password_confirmation" class="w-full p-2 border border-gray-300 rounded">
-            </div>
-            <div class="mb-4">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Submit
+            <h2 class="text-2xl font-black text-white mb-1">Welcome, {{ $user->name }}!</h2>
+            <p class="text-sm font-semibold text-white/80">Please set up your account password</p>
+        </div>
+
+        <div class="bg-white rounded-4xlx p-8 shadow-xl border border-gray-100">
+            <form method="POST" action="{{ route('account-setup.store', $token) }}" class="flex flex-col gap-5">
+                @csrf
+                <input type="hidden" name="token" value="{{ $token }}">
+
+                @if ($errors->any())
+                    <div class="bg-red-50 border border-red-200 text-red-600 text-sm font-semibold p-4 rounded-xl mb-2">
+                        <ul class="list-disc list-inside flex flex-col gap-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <div class="flex flex-col gap-1.5">
+                    <label for="password" class="text-xs font-extrabold text-gray-500 uppercase tracking-wide">New Password</label>
+                    <div class="relative">
+                        <i data-lucide="lock" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                        <input type="password" id="password" name="password" required placeholder="Enter new password"
+                               class="w-full pl-11 pr-4 py-3 border-2 border-gray-100 rounded-xl text-sm font-semibold text-gray-800 focus:outline-none focus:border-[#197B40] transition-colors bg-gray-50">
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-1.5">
+                    <label for="password_confirmation" class="text-xs font-extrabold text-gray-500 uppercase tracking-wide">Confirm Password</label>
+                    <div class="relative">
+                        <i data-lucide="lock-keyhole" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                        <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Confirm new password"
+                               class="w-full pl-11 pr-4 py-3 border-2 border-gray-100 rounded-xl text-sm font-semibold text-gray-800 focus:outline-none focus:border-[#197B40] transition-colors bg-gray-50">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-[#197B40] hover:bg-[#146032] text-white font-extrabold py-3.5 rounded-xl transition-all shadow-md mt-2 tracking-wide">
+                    Save Password & Login
                 </button>
-            </div>
+            </form>
+        </div>
+
     </div>
-      
 </div>
 @endsection

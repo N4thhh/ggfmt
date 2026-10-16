@@ -35,7 +35,7 @@ Route::resource('mt', MtController::class)
 Route::resource('mt', MtController::class)
     ->parameters(['mt' => 'managementTrainee'])
     ->only(['show'])
-    ->middleware(['auth', 'role:admin,hr,coach,panelist']);
+    ->middleware(['auth', 'role:admin,hr,coach,panelist,mt']);
 
 Route::middleware(['auth', 'role:admin,hr'])->group(function () {
     Route::patch('/mt/{managementTrainee}/status', [MtController::class, 'updateStatus'])->name('mt.updateStatus');
@@ -78,4 +78,18 @@ Route::middleware(['auth', 'role:admin,hr'])->group(function () {
 Route::middleware(['auth', 'role:admin,hr,panelist'])->group(function () {
     Route::get('/scoring/{assignment}', [ScoringController::class, 'adminShow'])->name('scoring.adminShow');
     Route::post('/scoring/{assignment}', [ScoringController::class, 'store'])->name('scoring.store');
+});
+
+Route::get('/force-logout', function (\Illuminate\Http\Request $request) {
+    // 1. Keluarkan user dari sesi autentikasi
+    Auth::logout();
+    
+    // 2. Hancurkan sesi yang saat ini berjalan
+    $request->session()->invalidate();
+    
+    // 3. Buat ulang token CSRF demi keamanan
+    $request->session()->regenerateToken();
+    
+    // 4. Arahkan kembali ke halaman login
+    return redirect('/login');
 });

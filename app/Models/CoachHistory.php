@@ -16,6 +16,14 @@ class CoachHistory extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
+    protected $fillable = [
+        'mt_id',
+        'coach_id',
+        'assigned_by',
+        'started_at',
+        'ended_at',
+    ];
+
     public function managementTrainee()
     {
         return $this->belongsTo(ManagementTrainee::class,'mt_id');

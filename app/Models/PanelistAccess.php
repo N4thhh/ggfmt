@@ -16,6 +16,13 @@ class PanelistAccess extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
+    protected $fillable = [
+        'panelist_id',
+        'assignment_id',
+        'assigned_by',
+        'assigned_at',
+    ];
+
     public function assignment()
     {
         return $this->belongsTo(Assignment::class);
