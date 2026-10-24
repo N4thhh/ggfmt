@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\ManagementTrainee;
 use App\Models\Coach;
 use App\Models\Panelist;
+use App\Models\Assignment;
 
 class UserController extends Controller
 {
@@ -67,20 +68,7 @@ class UserController extends Controller
             ]);
 
             match ($validated['role']) {
-                'mt' => ManagementTrainee::create([
-                    'user_id' => $user->id,
-                    'index_number' => $validated['index_number'],
-                    'mt_program_id' => $validated['mt_program_id'],
-                    'batch' => $validated['batch'],
-                    'major' => $validated['major'],
-                    'university' => $validated['university'],
-                    'education_degree' => $validated['education_degree'],
-                    'mbti' => $validated['mbti'],
-                    'placement' => $validated['placement'],
-                    'program_leader' => $validated['program_leader'],
-                    'assignment_leader' => $validated['assignment_leader'],
-                    'status' => 'active',
-                ]),
+                'mt' => $this->createManagementTraineeWithAssignments($user, $validated),
                 'coach' => Coach::create([
                     'user_id' => $user->id,
                     'index_number' => $validated['index_number'],
@@ -93,6 +81,38 @@ class UserController extends Controller
         });
 
         return redirect()->route('user.index')->with('success', 'User berhasil dibuat.');
+    }
+
+    /**
+     * Buat row ManagementTrainee, lalu sekaligus auto-buat 3 assignment
+     * (Phase 1/2/3) untuk MT baru ini supaya dashboard-nya langsung terisi.
+     */
+    private function createManagementTraineeWithAssignments(User $user, array $validated): ManagementTrainee
+    {
+        $mt = ManagementTrainee::create([
+            'user_id' => $user->id,
+            'index_number' => $validated['index_number'],
+            'mt_program_id' => $validated['mt_program_id'],
+            'batch' => $validated['batch'],
+            'major' => $validated['major'],
+            'university' => $validated['university'],
+            'education_degree' => $validated['education_degree'],
+            'mbti' => $validated['mbti'],
+            'placement' => $validated['placement'],
+            'program_leader' => $validated['program_leader'],
+            'assignment_leader' => $validated['assignment_leader'],
+            'status' => 'active',
+        ]);
+
+        foreach (['Phase 1', 'Phase 2', 'Phase 3'] as $phase) {
+            Assignment::create([
+                'mt_id' => $mt->id,
+                'title' => $user->name . ' ' . $phase,
+                'phase' => $phase,
+            ]);
+        }
+
+        return $mt;
     }
 
     /**

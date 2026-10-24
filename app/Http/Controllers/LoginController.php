@@ -27,10 +27,10 @@ class LoginController extends Controller
             }
 
             return match($role) {
-                'admin', 'hr' => redirect()->route('mt.index'), // Saya sesuaikan dengan route di fungsi login
+                'admin', 'hr' => redirect()->route('mt.index'),
                 'coach'       => redirect()->route('coach.show', $user->coach),
                 'panelist'    => redirect()->route('panelist.show', $user->panelist),
-                'mt'          => redirect()->route('mt.show', $user->managementTrainee),
+                'mt'          => redirect()->route('mt.dashboard', $user->managementTrainee),
                 default       => redirect()->route('mt.index'),
             };
         }
@@ -76,7 +76,7 @@ class LoginController extends Controller
                 'admin', 'hr' => redirect()->route('mt.index'),
                 'coach'       => redirect()->route('coach.show', $user->coach),
                 'panelist'    => redirect()->route('panelist.show', $user->panelist),
-                'mt'          => redirect()->route('mt.show', $user->managementTrainee),
+                'mt'          => redirect()->route('mt.dashboard', $user->managementTrainee),
                 default       => redirect()->route('mt.index'),
             };
         } else {

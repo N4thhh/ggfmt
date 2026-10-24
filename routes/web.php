@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MtController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AccountSetupController;
@@ -32,10 +33,19 @@ Route::resource('mt', MtController::class)
     ->only(['index'])
     ->middleware(['auth', 'role:admin,hr,panelist']);
 
+// mt.show: dilihat admin/hr/coach/panelist -- role 'mt' TIDAK termasuk di sini,
+// MT punya halaman sendiri (mt.dashboard) di bawah.
 Route::resource('mt', MtController::class)
     ->parameters(['mt' => 'managementTrainee'])
     ->only(['show'])
-    ->middleware(['auth', 'role:admin,hr,coach,panelist,mt']);
+    ->middleware(['auth', 'role:admin,hr,coach,panelist']);
+
+Route::middleware(['auth', 'role:mt'])->group(function () {
+    Route::get('/mt-dashboard', [MtController::class, 'dashboard'])->name('mt.dashboard');
+    Route::post('/mt-dashboard/photo', [MtController::class, 'uploadPhoto'])->name('mt.uploadPhoto');
+    Route::patch('/mt-dashboard/data', [MtController::class, 'updateOwnData'])->name('mt.updateOwnData');
+    Route::post('/mt-dashboard/assignment/{assignment}/upload', [MtController::class, 'uploadAssignment'])->name('mt.uploadAssignment');
+});
 
 Route::middleware(['auth', 'role:admin,hr'])->group(function () {
     Route::patch('/mt/{managementTrainee}/status', [MtController::class, 'updateStatus'])->name('mt.updateStatus');
@@ -59,7 +69,12 @@ Route::middleware(['auth', 'role:admin,hr'])->group(function () {
 });
 
 Route::resource('panelist', PanelistController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'role:admin,hr']);
+
+Route::resource('panelist', PanelistController::class)
+    ->only(['show'])
+    ->middleware(['auth', 'role:admin,hr,panelist']);
 
 Route::middleware(['auth', 'role:admin,hr'])->group(function () {
     Route::post('/panelist/{panelist}/assign-assignment', [PanelistController::class, 'assignAssignment'])->name('panelist.assignAssignment');
@@ -83,13 +98,22 @@ Route::middleware(['auth', 'role:admin,hr,panelist'])->group(function () {
 Route::get('/force-logout', function (\Illuminate\Http\Request $request) {
     // 1. Keluarkan user dari sesi autentikasi
     Auth::logout();
-    
+
     // 2. Hancurkan sesi yang saat ini berjalan
     $request->session()->invalidate();
-    
+
     // 3. Buat ulang token CSRF demi keamanan
     $request->session()->regenerateToken();
-    
+
     // 4. Arahkan kembali ke halaman login
     return redirect('/login');
+});
+
+Route::post('/coach-notes/{managementTrainee}', [CoachController::class, 'storeNote'])
+    ->name('coach.storeNote')
+    ->middleware(['auth', 'role:coach']);
+
+Route::middleware(['auth', 'role:coach'])->group(function () {
+    Route::post('/coach-notes/{managementTrainee}', [CoachController::class, 'storeNote'])->name('coach.storeNote');
+    Route::patch('/coach-notes/{coachNote}', [CoachController::class, 'updateNote'])->name('coach.updateNote');
 });

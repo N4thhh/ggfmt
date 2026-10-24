@@ -16,6 +16,14 @@ class Assignment extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
+    protected $fillable = [
+        'mt_id',
+        'title',
+        'phase',
+        'file_path',
+        'uploaded_at',
+    ];
+
     public function managementTrainee()
     {
         return $this->belongsTo(ManagementTrainee::class,'mt_id');

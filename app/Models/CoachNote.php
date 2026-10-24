@@ -14,7 +14,13 @@ class CoachNote extends Model
     protected $table= 'coach_notes';
     public $incrementing = false;
     protected $keyType = 'string';
-    public $timestamps = false;
+
+    // created_at diisi DB (useCurrent), updated_at perlu di-manage Eloquent
+    public $timestamps = true;
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+
+    protected $fillable = ['coach_id', 'mt_id', 'coach_history_id', 'comments'];
 
     public function managementTrainee()
     {
@@ -24,5 +30,10 @@ class CoachNote extends Model
     public function coach()
     {
         return $this->belongsTo(Coach::class);
+    }
+
+    public function coachHistory()
+    {
+        return $this->belongsTo(CoachHistory::class);
     }
 }

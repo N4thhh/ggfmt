@@ -38,4 +38,9 @@ class CoachHistory extends Model
     {
         return $this->belongsTo(User::class,'assigned_by');
     }
+
+    public function coachNotes()
+{
+    return $this->hasMany(CoachNote::class);
+}
 }

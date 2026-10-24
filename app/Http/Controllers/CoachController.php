@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Coach;
 use Illuminate\Support\Facades\Auth;
 use App\Models\CoachHistory;
+use App\Models\CoachNote;
+use App\Models\ManagementTrainee;
 
 class CoachController extends Controller
 {
@@ -56,10 +58,26 @@ class CoachController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+public function updateNote(Request $request, CoachNote $coachNote)
+{
+    $coach = Auth::user()->coach;
+    abort_unless($coach, 403);
+    abort_unless($coachNote->coach_id === $coach->id, 403);
+
+    // note ini cuma boleh diubah kalau masih nempel ke periode coaching yang SEDANG aktif
+    $isCurrentPeriod = $coachNote->coachHistory
+        && is_null($coachNote->coachHistory->ended_at);
+
+    abort_unless($isCurrentPeriod, 403);
+
+    $request->validate([
+        'comments' => 'required|string',
+    ]);
+
+    $coachNote->update(['comments' => $request->comments]);
+
+    return redirect()->route('coach.show', $coach)->with('success', 'Coaching note berhasil diperbarui.');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -119,5 +137,31 @@ public function assignMt(Request $request, Coach $coach)
     ]);
 
     return back()->with('success', 'MT berhasil ditugaskan ke coach ini.');
+}
+
+public function storeNote(Request $request, ManagementTrainee $managementTrainee)
+{
+    $coach = Auth::user()->coach;
+    abort_unless($coach, 403);
+
+    $currentHistory = $managementTrainee->coachHistory()
+        ->where('coach_id', $coach->id)
+        ->whereNull('ended_at')
+        ->first();
+
+    abort_unless($currentHistory, 403);
+
+    $request->validate([
+        'comments' => 'required|string',
+    ]);
+
+    CoachNote::create([
+        'coach_id' => $coach->id,
+        'mt_id' => $managementTrainee->id,
+        'coach_history_id' => $currentHistory->id,
+        'comments' => $request->comments,
+    ]);
+
+    return redirect()->route('coach.show', $coach)->with('success', 'Coaching note berhasil ditambahkan.');
 }
 }

@@ -16,6 +16,14 @@ class Score extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
+    protected $fillable = [
+        'panelist_id',
+        'assignment_id',
+        'score',
+        'comments',
+        'submitted_at',
+    ];
+
     public function assignment()
     {
         return $this->belongsTo(Assignment::class);
